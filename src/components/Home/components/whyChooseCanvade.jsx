@@ -46,7 +46,7 @@ export default function WhyChooseCanvade() {
           {/* Left: related image placeholder */}
           <div className="w-full h-full min-h-[380px] rounded-2xl overflow-hidden">
             <img
-              src="/institute.jpg"
+              src="/final image.avif"
               alt="Students learning at an institute"
               className="w-full h-full object-cover"
             />

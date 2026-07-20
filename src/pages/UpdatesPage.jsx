@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ChevronDown,
@@ -15,64 +15,63 @@ const UpdatesPage = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All Updates");
-  const [activeYear, setActiveYear] = useState("2026"); // Set to 2026 so your 2026 API data shows up immediately
+  const [activeYear, setActiveYear] = useState("2026");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("Latest");
 
-  // API State
   const [allUpdates, setAllUpdates] = useState([]);
   const BASE_URL = import.meta.env.VITE_API_URL || "https://canvade-backend.onrender.com";
-  const categories = [
-    { name: "All Updates" },
-    { name: "Press Release" },
-    { name: "Institution Update" },
-    { name: "Partnership" },
-    { name: "Event" },
-    { name: "News" },
-  ];
 
-  const years = [
-    { year: "2026" },
-    { year: "2025" },
-    { year: "2024" },
-    { year: "2023" },
-  ];
-
-  // Fetch data exactly matching your API payload structure
-  useEffect(() => {
-    const fetchUpdates = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/api/updates/all`);
-        const json = await response.json();
-        if (json && json.success && Array.isArray(json.data)) {
-          setAllUpdates(json.data);
-        }
-      } catch (error) {
-        console.error("Error fetching updates:", error);
+  const fetchUpdates = useCallback(async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/updates/all`);
+      const json = await response.json();
+      if (json && json.success && Array.isArray(json.data)) {
+        setAllUpdates(json.data);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching updates:", error);
+    }
+  }, [BASE_URL]);
+
+  useEffect(() => {
     fetchUpdates();
-  }, []);
+  }, [fetchUpdates]);
 
-  // Your exact original filtering logic, matched to your backend keys (.tag and .createdAt)
-  const filteredUpdates = allUpdates.filter((item) => {
-    const matchCategory = activeCategory === "All Updates" || item.tag === activeCategory;
-    const itemYear = item.createdAt ? new Date(item.createdAt).getFullYear().toString() : "2026";
-    const matchYear = itemYear === activeYear;
-    return matchCategory && matchYear;
-  });
+  const filteredUpdates = useMemo(() => {
+    return allUpdates.filter((item) => {
+      const matchCategory = activeCategory === "All Updates" || item.tag === activeCategory;
+      const itemYear = item.createdAt ? new Date(item.createdAt).getFullYear().toString() : "2026";
+      const matchYear = itemYear === activeYear;
+      return matchCategory && matchYear;
+    });
+  }, [allUpdates, activeCategory, activeYear]);
 
-  const totalPages = Math.ceil(filteredUpdates.length / ITEMS_PER_PAGE);
-  const paginatedUpdates = filteredUpdates.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  );
+  const totalPages = useMemo(() => Math.ceil(filteredUpdates.length / ITEMS_PER_PAGE), [filteredUpdates]);
 
-  const handlePageChange = (page) => {
+  const paginatedUpdates = useMemo(() => {
+    return filteredUpdates.slice(
+      (currentPage - 1) * ITEMS_PER_PAGE,
+      currentPage * ITEMS_PER_PAGE,
+    );
+  }, [filteredUpdates, currentPage]);
+
+  const handlePageChange = useCallback((page) => {
     if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, [totalPages]);
+
+  const handleCategoryChange = useCallback((cat) => {
+    setActiveCategory(cat);
+    setSidebarOpen(false);
+    setCurrentPage(1);
+  }, []);
+
+  const handleYearChange = useCallback((year) => {
+    setActiveYear(year);
+    setCurrentPage(1);
+  }, []);
 
   const SidebarContent = () => (
     <div className="space-y-4">
@@ -85,10 +84,7 @@ const UpdatesPage = () => {
           {categories.map((cat) => (
             <div
               key={cat.name}
-              onClick={() => {
-                setActiveCategory(cat.name);
-                setSidebarOpen(false);
-              }}
+              onClick={() => handleCategoryChange(cat.name)}
               className={`flex items-center p-3 rounded-lg cursor-pointer transition-all ${activeCategory === cat.name
                   ? "bg-[#E6F4F1] text-[#059669] font-bold"
                   : "text-gray-700 hover:bg-gray-50 font-bold"
@@ -109,7 +105,7 @@ const UpdatesPage = () => {
           {years.map((item) => (
             <div
               key={item.year}
-              onClick={() => setActiveYear(item.year)}
+              onClick={() => handleYearChange(item.year)}
               className={`flex items-center p-3 rounded-lg cursor-pointer transition-all ${activeYear === item.year
                   ? "bg-[#E6F4F1] text-[#059669] font-semibold"
                   : "text-gray-700 hover:bg-gray-50 font-bold"
@@ -206,11 +202,11 @@ const UpdatesPage = () => {
 
               {/* Only changed auto-fit to auto-fill here to restrict card widening */}
               <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,320px),1fr))] gap-5 xl:gap-6">
-                {paginatedUpdates.map((item, idx) => {
+                {paginatedUpdates.map((item) => {
                   const updateId = item.updateId || item._id || item.id;
                   return (
                     <UpdateCard
-                      key={`${currentPage}-${idx}`}
+                      key={updateId}
                       {...item}
                       image={item.thumbnail || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500"}
                       date={item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ""}

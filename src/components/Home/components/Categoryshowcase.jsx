@@ -3,33 +3,9 @@ import React from 'react';
 /**
  * CategoryShowcase
  * ------------------------------------------------------------------
- * One reusable component that reproduces the "Know About <Category>"
- * card layout (3-photo collage + heading + description + 2 feature
- * rows + CTA button). Pass different props to render each of your
- * 12+ category variants from the SAME component.
- *
- * Props
- * ------------------------------------------------------------------
- * image         { src: string, alt: string }  — a single pre-composed
- *               collage graphic. Takes priority over `images` when set.
- * images        Array<{ src: string, alt: string }>  — fallback: exactly
- *               3 images, in this order: [topLeft, topRight, bottomCenter],
- *               rendered as a CSS collage when `image` is not provided.
- * category      string   — the highlighted (colored) part of the heading,
- *               e.g. "Government Exams Preparation"
- * eyebrow       string   — text before the highlighted category,
- *               default: "Know About"
- * description   string   — paragraph under the heading
- * features      Array<{ icon: React.ComponentType, title: string, description: string }>
- *               — exactly 2 items rendered as icon rows
- * ctaLabel      string   — button text, default "Explore Here"
- * onCtaClick    () => void — click handler for the button
- * accentColor   string   — tailwind color name driving the highlighted
- *               heading text + button background, default "emerald"
- * iconBg        string   — tailwind color name for the small icon circles,
- *               default "amber"
- * className     string   — extra classes for the outer wrapper
- * ------------------------------------------------------------------
+ * Reusable component for "Know About <Category>" card layout
+ * Optimized for zero-flicker transitions, stable height layout,
+ * and smooth image crossfades.
  */
 export default function CategoryShowcase({
     image,
@@ -46,9 +22,6 @@ export default function CategoryShowcase({
 }) {
     const [topLeft, topRight, bottomCenter] = images;
 
-    // Tailwind needs full class names at build time (no dynamic string
-    // interpolation of the color into a class), so we map the handful
-    // of colors we support to static class strings.
     const accentText = {
         emerald: 'text-emerald-600',
         teal: 'text-teal-600',
@@ -74,68 +47,76 @@ export default function CategoryShowcase({
 
     return (
         <div
-            className={`w-full max-w-[1600px] mx-auto bg-slate-50 rounded-3xl p-6 sm:p-10 grid md:grid-cols-2 gap-10 items-center ${className}`}
+            className={`w-full max-w-[1600px] mx-auto bg-slate-50 rounded-3xl p-6 sm:p-10 grid md:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[460px] sm:min-h-[500px] md:min-h-[520px] transition-all duration-500 ease-in-out ${className}`}
         >
-            {/* Image collage */}
-            {image ? (
-                <img
-                    src={image.src}
-                    alt={image.alt || ''}
-                    className="w-full h-auto mx-auto"
-                    style={{ maxWidth: 500 }}
-                />
-            ) : (
-                <div className="relative w-full mx-auto " style={{ maxWidth: 460, aspectRatio: '11 / 9' }}>
-                    {topLeft && (
-                        <img
-                            src={topLeft.src}
-                            alt={topLeft.alt || ''}
-                            className="absolute top-0 left-0 object-cover rounded-2xl shadow-lg"
-                            style={{ width: '58%', aspectRatio: "1 " }}
-                        />
-                    )}
-                    {topRight && (
-                        <img
-                            src={topRight.src}
-                            alt={topRight.alt || ''}
-                            className="absolute top-11 -right-11 object-cover rounded-2xl shadow-lg"
-                            style={{ width: '46%', aspectRatio: '4/4' }}
-                        />
-                    )}
-                    {bottomCenter && (
-                        <img
-                            src={bottomCenter.src}
-                            alt={bottomCenter.alt || ''}
-                            className="absolute -bottom-11 left-1/2 object-cover rounded-2xl shadow-xl "
-                            style={{ width: '62%', aspectRatio: '1 ', transform: 'translateX(-50%)' }}
-                        />
-                    )}
-                </div>
-            )}
+            {/* Left Column: Image collage container with stable min-height */}
+            <div className="w-full flex items-center justify-center min-h-[260px] sm:min-h-[320px] md:min-h-[380px] overflow-hidden relative">
+                {image ? (
+                    <img
+                        src={image.src}
+                        alt={image.alt || ''}
+                        className="w-full max-w-[500px] h-auto max-h-[380px] object-contain mx-auto transition-all duration-500"
+                        loading="eager"
+                        decoding="async"
+                    />
+                ) : (
+                    <div className="relative w-full mx-auto" style={{ maxWidth: 460, aspectRatio: '11 / 9' }}>
+                        {topLeft && (
+                            <img
+                                src={topLeft.src}
+                                alt={topLeft.alt || ''}
+                                className="absolute top-0 left-0 object-cover rounded-2xl shadow-lg transition-all duration-500"
+                                style={{ width: '58%', aspectRatio: '1' }}
+                                loading="eager"
+                            />
+                        )}
+                        {topRight && (
+                            <img
+                                src={topRight.src}
+                                alt={topRight.alt || ''}
+                                className="absolute top-11 -right-11 object-cover rounded-2xl shadow-lg transition-all duration-500"
+                                style={{ width: '46%', aspectRatio: '4/4' }}
+                                loading="eager"
+                            />
+                        )}
+                        {bottomCenter && (
+                            <img
+                                src={bottomCenter.src}
+                                alt={bottomCenter.alt || ''}
+                                className="absolute -bottom-11 left-1/2 object-cover rounded-2xl shadow-xl transition-all duration-500"
+                                style={{ width: '62%', aspectRatio: '1', transform: 'translateX(-50%)' }}
+                                loading="eager"
+                            />
+                        )}
+                    </div>
+                )}
+            </div>
 
-            {/* Text content */}
-            <div>
-                <h2 className="text-3xl sm:text-4xl font-semibold text-slate-900 leading-tight">
+            {/* Right Column: Text content with stable height flow */}
+            <div className="flex flex-col justify-center min-h-[280px] sm:min-h-[320px]">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 leading-tight min-h-[40px] sm:min-h-[48px]">
                     {eyebrow} <span className={`font-bold ${accentText}`}>{category}</span>
                 </h2>
 
                 {description && (
-                    <p className="mt-4 text-slate-600 leading-relaxed">{description}</p>
+                    <p className="mt-3 sm:mt-4 text-sm sm:text-base text-slate-600 leading-relaxed line-clamp-3 min-h-[64px]">
+                        {description}
+                    </p>
                 )}
 
-                <div className="mt-6 space-y-5">
+                <div className="mt-5 sm:mt-6 space-y-4 sm:space-y-5 min-h-[120px]">
                     {features.map((feature, i) => {
                         const Icon = feature.icon;
                         return (
-                            <div key={i} className="flex gap-4 items-start">
+                            <div key={i} className="flex gap-3.5 sm:gap-4 items-start">
                                 <span
-                                    className={`flex-shrink-0 w-9 h-9 rounded-full ${iconBgClass} flex items-center justify-center`}
+                                    className={`flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full ${iconBgClass} flex items-center justify-center shadow-xs`}
                                 >
                                     {Icon && <Icon className="w-4 h-4 text-slate-900" strokeWidth={2.25} />}
                                 </span>
                                 <div>
-                                    <p className="font-semibold text-slate-900">{feature.title}</p>
-                                    <p className="text-sm text-slate-600 mt-0.5">{feature.description}</p>
+                                    <p className="font-semibold text-sm sm:text-base text-slate-900">{feature.title}</p>
+                                    <p className="text-xs sm:text-sm text-slate-600 mt-0.5 leading-snug">{feature.description}</p>
                                 </div>
                             </div>
                         );
@@ -143,13 +124,15 @@ export default function CategoryShowcase({
                 </div>
 
                 {ctaLabel && (
-                    <button
-                        type="button"
-                        onClick={onCtaClick}
-                        className={`mt-7 inline-flex items-center px-6 py-2.5 rounded-lg text-white font-medium transition-colors ${accentButton}`}
-                    >
-                        {ctaLabel}
-                    </button>
+                    <div className="mt-6 sm:mt-7">
+                        <button
+                            type="button"
+                            onClick={onCtaClick}
+                            className={`inline-flex items-center px-6 py-2.5 rounded-lg text-white text-xs sm:text-sm font-medium transition-all duration-200 active:scale-95 cursor-pointer shadow-sm hover:shadow-md ${accentButton}`}
+                        >
+                            {ctaLabel}
+                        </button>
+                    </div>
                 )}
             </div>
         </div>

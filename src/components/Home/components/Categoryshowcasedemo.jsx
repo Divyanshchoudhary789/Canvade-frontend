@@ -4,11 +4,8 @@ import CategoryShowcase from './Categoryshowcase';
 import { categories } from '../constants/Categoriesdata';
 
 const ROTATE_INTERVAL_MS = 6000;
-const FADE_DURATION_MS = 600;
+const FADE_DURATION_MS = 400;
 
-// Single showcase slot that cycles through every category on its own:
-// starts on a random category on page load, then smoothly crossfades to
-// the next one on a timer for as long as the page stays open.
 export default function CategoryShowcaseDemo() {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(() =>
@@ -16,6 +13,24 @@ export default function CategoryShowcaseDemo() {
   );
   const [isVisible, setIsVisible] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+
+  // Preload all category images on mount so image switching is 100% instant without network latency flicker
+  useEffect(() => {
+    categories.forEach((cat) => {
+      if (cat.image?.src) {
+        const img = new Image();
+        img.src = cat.image.src;
+      }
+      if (Array.isArray(cat.images)) {
+        cat.images.forEach((i) => {
+          if (i?.src) {
+            const img = new Image();
+            img.src = i.src;
+          }
+        });
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (isPaused) return undefined;
@@ -41,22 +56,24 @@ export default function CategoryShowcaseDemo() {
 
   return (
     <div
-      className="py-0"
+      className="py-4 md:py-6 w-full max-w-[1700px] mx-auto px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 min-h-[460px] sm:min-h-[500px] md:min-h-[520px] flex items-center justify-center overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <CategoryShowcase
-        key={cat.id}
-        image={cat.image}
-        images={cat.images}
-        category={cat.category}
-        description={cat.description}
-        features={cat.features}
-        onCtaClick={() => handleExplore(cat.category)}
-        className={`transition-opacity duration-[600ms] ease-in-out ${
-          isVisible ? 'opacity-100' : 'opacity-0'
+      <div
+        className={`w-full transition-opacity duration-400 ease-in-out transform-gpu ${
+          isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.995]'
         }`}
-      />
+      >
+        <CategoryShowcase
+          image={cat.image}
+          images={cat.images}
+          category={cat.category}
+          description={cat.description}
+          features={cat.features}
+          onCtaClick={() => handleExplore(cat.category)}
+        />
+      </div>
     </div>
   );
 }

@@ -59,7 +59,7 @@ export default function CommunityHero() {
           <div className="relative">
             <div className="h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-[#E4DEFB] shadow-md">
               <img
-                src="https://i.pravatar.cc/150?img=47"
+                src="/new image.avif"
                 alt=""
                 className="h-full w-full object-cover"
               />
@@ -89,7 +89,7 @@ export default function CommunityHero() {
           <div className="relative">
             <div className="h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-[#DCE8FB] shadow-md">
               <img
-                src="https://i.pravatar.cc/150?img=12"
+                src="/image.png"
                 alt=""
                 className="h-full w-full object-cover"
               />

@@ -1,709 +1,24 @@
-/**
- * HeroContainer Component
- * Main container with responsive layout handling
- * Manages background image and content positioning
- */
-
-// import React, { memo } from "react";
-// import HeroText from "./HeroText";
-// import SearchForm from "./SearchForm";
-// import { RESPONSIVE_HEIGHT, HERO_IMAGES } from "../constants/heroConstants";
-
-// const BackgroundImage = memo(function BackgroundImage({
-//   src,
-//   isFading,
-//   alt = "Hero Background",
-// }) {
-//   return (
-//     <img
-//       src={src}
-//       alt={alt}
-//       className="absolute inset-0 h-full w-full object-cover transition-opacity duration-800 ease-out"
-//       style={{
-//         objectPosition: "55% center",
-//         opacity: isFading ? 0 : 1,
-//       }}
-//       loading="eager"
-//       decoding="async"
-//     />
-//   );
-// });
-
-// const MobileTabletLayout = memo(function MobileTabletLayout({
-//   isVisible,
-//   isMobile,
-//   formData,
-//   errors,
-//   touched,
-//   onFieldChange,
-//   onFieldBlur,
-//   onFormSubmit,
-// }) {
-//   return (
-//     <div
-//       className="relative z-10 flex flex-col gap-10"
-//       style={{
-//         padding: isMobile ? "2rem 1.25rem 1.25rem" : "3rem 2.5rem 3rem",
-//         animation: "fadeUp 0.6s ease forwards",
-//       }}
-//     >
-//       <HeroText isMobile={isMobile} isTablet={!isMobile} />
-
-//       <SearchForm
-//         formData={formData}
-//         errors={errors}
-//         touched={touched}
-//         onFieldChange={onFieldChange}
-//         onFieldBlur={onFieldBlur}
-//         onSubmit={onFormSubmit}
-//         isMobile={isMobile}
-//         isTablet={!isMobile}
-//       />
-//     </div>
-//   );
-// });
-
-// const DesktopLayout = memo(function DesktopLayout({
-//   isVisible,
-//   formData,
-//   errors,
-//   touched,
-//   onFieldChange,
-//   onFieldBlur,
-//   onFormSubmit,
-// }) {
-//   return (
-//     <>
-//       {/* Hero Text - Left Side */}
-//       <div
-//         className="absolute z-10 w-2/5"
-//         style={{
-//           left: "48px",
-//           top: "28%",
-//           transform: isVisible ? "translateY(-50%)" : "translate(-20px,-50%)",
-//           opacity: isVisible ? 1 : 0,
-//           transition: "all 0.8s ease-out",
-//           maxWidth: "460px",
-//         }}
-//       >
-//         <HeroText isMobile={false} isTablet={false} />
-//       </div>
-
-//       {/* Search Form - Right Side */}
-//       <div
-//         className="absolute z-10 w-[42%] max-w-[460px] min-w-0"
-//         style={{
-//           right: "clamp(20px,4vw,48px)",
-//           bottom: "-4px",
-//           transform: isVisible ? "translateY(0)" : "translateX(20px)",
-//           opacity: isVisible ? 1 : 0,
-//           transition: "all 0.8s ease-out",
-//         }}
-//       >
-//         <div
-//           className="rounded-t-2xl bg-white"
-//           style={{
-//             minHeight: "500px",
-//             boxShadow: "none",
-//           }}
-//         >
-//           <SearchForm
-//             formData={formData}
-//             errors={errors}
-//             touched={touched}
-//             onFieldChange={onFieldChange}
-//             onFieldBlur={onFieldBlur}
-//             onSubmit={onFormSubmit}
-//             isMobile={false}
-//             isTablet={false}
-//           />
-//         </div>
-//       </div>
-//     </>
-//   );
-// });
-
-// const HeroContainer = memo(function HeroContainer({
-//   currentImageIndex,
-//   isFading,
-//   isVisible,
-//   isMobile,
-//   isTablet,
-//   formData,
-//   errors,
-//   touched,
-//   onFieldChange,
-//   onFieldBlur,
-//   onFormSubmit,
-// }) {
-//   const backgroundImage = HERO_IMAGES[currentImageIndex] || HERO_IMAGES[0];
-
-//   return (
-//     <div
-//       className="relative overflow-hidden bg-gradient-to-b from-gray-900 to-black"
-//       style={{
-//         borderRadius: isMobile ? "1.5rem" : "2rem",
-//         height: isMobile || isTablet ? "auto" : RESPONSIVE_HEIGHT.desktop,
-//         minHeight:
-//           isMobile || isTablet ? "unset" : RESPONSIVE_HEIGHT.minHeightDesktop,
-//         maxHeight:
-//           isMobile || isTablet ? "none" : RESPONSIVE_HEIGHT.maxHeightDesktop,
-//       }}
-//       role="banner"
-//       aria-label="Hero section"
-//     >
-//       {/* Background Image */}
-//       <BackgroundImage src={backgroundImage} isFading={isFading} />
-
-//       {/* Overlay */}
-//       <div
-//         className="absolute inset-0"
-//         style={{
-//           background: "transparent",
-//           zIndex: 5,
-//         }}
-//         aria-hidden="true"
-//       />
-
-//       {/* Content */}
-//       {isMobile || isTablet ? (
-//         <MobileTabletLayout
-//           isVisible={isVisible}
-//           isMobile={isMobile}
-//           formData={formData}
-//           errors={errors}
-//           touched={touched}
-//           onFieldChange={onFieldChange}
-//           onFieldBlur={onFieldBlur}
-//           onFormSubmit={onFormSubmit}
-//         />
-//       ) : (
-//         <DesktopLayout
-//           isVisible={isVisible}
-//           formData={formData}
-//           errors={errors}
-//           touched={touched}
-//           onFieldChange={onFieldChange}
-//           onFieldBlur={onFieldBlur}
-//           onFormSubmit={onFormSubmit}
-//         />
-//       )}
-//     </div>
-//   );
-// });
-
-// export default HeroContainer;
-
-
-
-
-
-
-
-// import React, { memo } from 'react';
-// import HeroText from './HeroText';
-// import SearchForm from './SearchForm';
-// import { HERO_IMAGES } from '../constants/heroConstants';
-
-// const BackgroundImage = memo(function BackgroundImage({ src, isFading, alt = 'Hero Background' }) {
-//   return (
-//     <img
-//       src={src}
-//       alt={alt}
-//       className="absolute inset-0 h-full w-full object-cover"
-//       style={{
-//         objectPosition: 'center center',
-//         opacity: isFading ? 0 : 1,
-//         transition: 'opacity 0.8s ease-out',
-//       }}
-//       loading="eager"
-//       decoding="async"
-//     />
-//   );
-// });
-
-// const HeroContainer = memo(function HeroContainer({
-//   currentImageIndex,
-//   isFading,
-//   isVisible,
-//   isMobile,
-//   isTablet,
-//   formData,
-//   errors,
-//   touched,
-//   onFieldChange,
-//   onFieldBlur,
-//   onFormSubmit,
-// }) {
-//   const backgroundImage = HERO_IMAGES[currentImageIndex] || HERO_IMAGES[0];
-
-//   return (
-//     <div
-//       className="hero-root relative overflow-hidden bg-gradient-to-br from-gray-900 to-teal-900"
-//       role="banner"
-//       aria-label="Hero section"
-//     >
-//       {/* Background Image */}
-//       <BackgroundImage src={backgroundImage} isFading={isFading} />
-
-//       {/* Dark overlay — stronger on mobile for text legibility */}
-//       <div
-//         className="absolute inset-0 z-[1]"
-//         style={{
-//           background: isMobile
-//             ? 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 100%)'
-//             : isTablet
-//             ? 'linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.35) 100%)'
-//             : 'linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.10) 55%, rgba(0,0,0,0.0) 100%)',
-//         }}
-//         aria-hidden="true"
-//       />
-
-//       {/* ── MOBILE layout ── */}
-//       {isMobile && (
-//         <div
-//           className="relative z-10 flex flex-col px-4 pt-8 pb-6 gap-6"
-//           style={{ animation: 'fadeUp 0.6s ease forwards' }}
-//         >
-//           <HeroText isMobile isTablet={false} isDesktop={false} />
-//           <SearchForm
-//             formData={formData}
-//             errors={errors}
-//             touched={touched}
-//             onFieldChange={onFieldChange}
-//             onFieldBlur={onFieldBlur}
-//             onSubmit={onFormSubmit}
-//             isMobile
-//             isTablet={false}
-//           />
-//         </div>
-//       )}
-
-//       {/* ── TABLET layout ── */}
-//       {isTablet && !isMobile && (
-//         <div
-//           className="relative z-10 flex flex-col px-8 pt-10 pb-8 gap-8"
-//           style={{ animation: 'fadeUp 0.6s ease forwards' }}
-//         >
-//           <HeroText isMobile={false} isTablet isDesktop={false} />
-//           <SearchForm
-//             formData={formData}
-//             errors={errors}
-//             touched={touched}
-//             onFieldChange={onFieldChange}
-//             onFieldBlur={onFieldBlur}
-//             onSubmit={onFormSubmit}
-//             isMobile={false}
-//             isTablet
-//           />
-//         </div>
-//       )}
-
-//       {/* ── DESKTOP layout ── */}
-//       {!isMobile && !isTablet && (
-//         <div className="relative z-10 flex items-stretch" style={{ minHeight: 'clamp(640px, 74vh, 800px)' }}>
-//           {/* LEFT — hero text, vertically centered */}
-//           <div
-//             className="flex items-center"
-//             style={{
-//               width: '48%',
-//               paddingLeft: 'clamp(3rem, 5vw, 5rem)',
-//               paddingRight: '2rem',
-//               opacity: isVisible ? 1 : 0,
-//               transform: isVisible ? 'translateX(0)' : 'translateX(-24px)',
-//               transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
-//             }}
-//           >
-//             <HeroText isMobile={false} isTablet={false} isDesktop />
-//           </div>
-
-//           {/* RIGHT — search form, vertically centered, flush to right edge */}
-//           <div
-//             className="flex items-center justify-end"
-//             style={{
-//               width: '52%',
-//               paddingRight: 'clamp(1.5rem, 3vw, 3rem)',
-//               paddingTop: '2rem',
-//               paddingBottom: '2rem',
-//               opacity: isVisible ? 1 : 0,
-//               transform: isVisible ? 'translateX(0)' : 'translateX(24px)',
-//               transition: 'opacity 0.8s ease-out, transform 0.8s ease-out 0.1s',
-//             }}
-//           >
-//             <div
-//               className="w-full rounded-2xl bg-white"
-//               style={{ maxWidth: '460px', minWidth: '400px' }}
-//             >
-//               <SearchForm
-//                 formData={formData}
-//                 errors={errors}
-//                 touched={touched}
-//                 onFieldChange={onFieldChange}
-//                 onFieldBlur={onFieldBlur}
-//                 onSubmit={onFormSubmit}
-//                 isMobile={false}
-//                 isTablet={false}
-//               />
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// });
-
-// export default HeroContainer;
-
-
-// import React, { memo } from 'react';
-// import HeroText from './HeroText';
-// import SearchForm from './SearchForm';
-// import { HERO_IMAGES } from '../constants/heroConstants';
-
-// const BackgroundImage = memo(function BackgroundImage({ src, isFading, alt = 'Hero Background' }) {
-//   return (
-//     <img
-//       src={src}
-//       alt={alt}
-//       className="absolute inset-0 h-full w-full object-cover"
-//       style={{
-//         objectPosition: 'center center',
-//         opacity: isFading ? 0 : 1,
-//         transition: 'opacity 0.8s ease-out',
-//       }}
-//       loading="eager"
-//       decoding="async"
-//     />
-//   );
-// });
-
-// const HeroContainer = memo(function HeroContainer({
-//   currentImageIndex,
-//   isFading,
-//   isVisible,
-//   isMobile,
-//   isTablet,
-//   formData,
-//   errors,
-//   touched,
-//   onFieldChange,
-//   onFieldBlur,
-//   onFormSubmit,
-// }) {
-//   const backgroundImage = HERO_IMAGES[currentImageIndex] || HERO_IMAGES[0];
-
-//   return (
-//     <div
-//       className="hero-root relative overflow-hidden bg-gradient-to-br from-gray-900 to-teal-900"
-//       role="banner"
-//       aria-label="Hero section"
-//       style={{
-//         borderRadius: isMobile ? '1rem' : '1.5rem',  // FIX 3: corner radius
-//       }}
-//     >
-//       {/* Background Image */}
-//       <BackgroundImage src={backgroundImage} isFading={isFading} />
-
-//       {/* Dark overlay */}
-//       <div
-//         className="absolute inset-0 z-[1]"
-//         style={{
-//           background: isMobile
-//             ? 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 100%)'
-//             : isTablet
-//             ? 'linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.35) 100%)'
-//             : 'linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.10) 55%, rgba(0,0,0,0.0) 100%)',
-//         }}
-//         aria-hidden="true"
-//       />
-
-//       {/* ── MOBILE layout ── */}
-//       {isMobile && (
-//         <div
-//           className="relative z-10 flex flex-col px-4 pt-8 pb-6 gap-6"
-//           style={{ animation: 'fadeUp 0.6s ease forwards' }}
-//         >
-//           <HeroText isMobile isTablet={false} isDesktop={false} />
-//           <SearchForm
-//             formData={formData}
-//             errors={errors}
-//             touched={touched}
-//             onFieldChange={onFieldChange}
-//             onFieldBlur={onFieldBlur}
-//             onSubmit={onFormSubmit}
-//             isMobile
-//             isTablet={false}
-//           />
-//         </div>
-//       )}
-
-//       {/* ── TABLET layout ── */}
-//       {isTablet && !isMobile && (
-//         <div
-//           className="relative z-10 flex flex-col px-8 pt-10 pb-8 gap-8"
-//           style={{ animation: 'fadeUp 0.6s ease forwards' }}
-//         >
-//           <HeroText isMobile={false} isTablet isDesktop={false} />
-//           <SearchForm
-//             formData={formData}
-//             errors={errors}
-//             touched={touched}
-//             onFieldChange={onFieldChange}
-//             onFieldBlur={onFieldBlur}
-//             onSubmit={onFormSubmit}
-//             isMobile={false}
-//             isTablet
-//           />
-//         </div>
-//       )}
-
-//       {/* ── DESKTOP layout ── */}
-//       {!isMobile && !isTablet && (
-//         <div
-//           className="relative z-10 flex"
-//           style={{ minHeight: 'clamp(640px, 74vh, 800px)' }}
-//         >
-//           {/* LEFT — hero text, top aligned (shoulder level) */}
-//           <div
-//             className="flex items-start"
-//             style={{
-//               width: '48%',
-//               paddingLeft: 'clamp(3rem, 5vw, 5rem)',
-//               paddingRight: '2rem',
-//               paddingTop: '10%',           // FIX 2: top aligned at shoulder
-//               opacity: isVisible ? 1 : 0,
-//               transform: isVisible ? 'translateX(0)' : 'translateX(-24px)',
-//               transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
-//             }}
-//           >
-//             <HeroText isMobile={false} isTablet={false} isDesktop />
-//           </div>
-
-//           {/* RIGHT — form bottom aligned at -2px */}
-//           <div
-//             className="flex items-end justify-end"
-//             style={{
-//               width: '52%',
-//               paddingRight: 'clamp(1.5rem, 3vw, 3rem)',
-//               paddingBottom: '0px',        // FIX 1: flush to bottom
-//               opacity: isVisible ? 1 : 0,
-//               transform: isVisible ? 'translateX(0)' : 'translateX(24px)',
-//               transition: 'opacity 0.8s ease-out, transform 0.8s ease-out 0.1s',
-//             }}
-//           >
-//             <div
-//               className="w-full bg-white"
-//               style={{
-//                 maxWidth: '460px',
-//                 minWidth: '400px',
-//                 borderRadius: '1.25rem 1.25rem 0 0',  // FIX 1: top radius only, bottom flush
-//                 marginBottom: '-2px',                   // FIX 1: -2px overlap
-//               }}
-//             >
-//               <SearchForm
-//                 formData={formData}
-//                 errors={errors}
-//                 touched={touched}
-//                 onFieldChange={onFieldChange}
-//                 onFieldBlur={onFieldBlur}
-//                 onSubmit={onFormSubmit}
-//                 isMobile={false}
-//                 isTablet={false}
-//               />
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// });
-
-// export default HeroContainer;
-
-
-
-// import React, { memo } from 'react';
-// import HeroText from './HeroText';
-// import SearchForm from './SearchForm';
-// import { HERO_IMAGES } from '../constants/heroConstants';
-
-// const BackgroundImage = memo(function BackgroundImage({ src, isFading, alt = 'Hero Background' }) {
-//   return (
-//     <img
-//       src={src}
-//       alt={alt}
-//       className="absolute inset-0 h-full w-full object-cover"
-//       style={{
-//         objectPosition: 'center center',
-//         opacity: isFading ? 0 : 1,
-//         transition: 'opacity 0.8s ease-out',
-//       }}
-//       loading="eager"
-//       decoding="async"
-//     />
-//   );
-// });
-
-// const HeroContainer = memo(function HeroContainer({
-//   currentImageIndex,
-//   isFading,
-//   isVisible,
-//   isMobile,
-//   isTablet,
-//   formData,
-//   errors,
-//   touched,
-//   onFieldChange,
-//   onFieldBlur,
-//   onFormSubmit,
-// }) {
-//   const backgroundImage = HERO_IMAGES[currentImageIndex] || HERO_IMAGES[0];
-
-//   return (
-//     <div
-//       className="hero-root relative overflow-hidden bg-gradient-to-br from-gray-900 to-teal-900"
-//       role="banner"
-//       aria-label="Hero section"
-//       style={{
-//         borderRadius: isMobile ? '1rem' : '1.5rem',
-//       }}
-//     >
-//       {/* Background Image */}
-//       <BackgroundImage src={backgroundImage} isFading={isFading} />
-
-//       {/* FIX: Bright overlay — matches reference image, no heavy dark shadow */}
-//       <div
-//         className="absolute inset-0 z-[1]"
-//         style={{
-//           background: isMobile
-//             ? 'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.18) 100%)'
-//             : isTablet
-//             ? 'linear-gradient(to bottom, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.10) 100%)'
-//             : 'linear-gradient(to right, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.03) 40%, rgba(0,0,0,0.0) 100%)',
-//         }}
-//         aria-hidden="true"
-//       />
-
-//       {/* MOBILE layout */}
-//       {isMobile && (
-//         <div
-//           className="relative z-10 flex flex-col px-4 pt-8 pb-6 gap-6"
-//           style={{ animation: 'fadeUp 0.6s ease forwards' }}
-//         >
-//           <HeroText isMobile isTablet={false} isDesktop={false} />
-//           <SearchForm
-//             formData={formData}
-//             errors={errors}
-//             touched={touched}
-//             onFieldChange={onFieldChange}
-//             onFieldBlur={onFieldBlur}
-//             onSubmit={onFormSubmit}
-//             isMobile
-//             isTablet={false}
-//           />
-//         </div>
-//       )}
-
-//       {/* TABLET layout */}
-//       {isTablet && !isMobile && (
-//         <div
-//           className="relative z-10 flex flex-col px-8 pt-10 pb-8 gap-8"
-//           style={{ animation: 'fadeUp 0.6s ease forwards' }}
-//         >
-//           <HeroText isMobile={false} isTablet isDesktop={false} />
-//           <SearchForm
-//             formData={formData}
-//             errors={errors}
-//             touched={touched}
-//             onFieldChange={onFieldChange}
-//             onFieldBlur={onFieldBlur}
-//             onSubmit={onFormSubmit}
-//             isMobile={false}
-//             isTablet
-//           />
-//         </div>
-//       )}
-
-//       {/* DESKTOP layout */}
-//       {!isMobile && !isTablet && (
-//         <div
-//           className="relative z-10 flex"
-//           style={{ minHeight: 'clamp(640px, 74vh, 800px)' }}
-//         >
-//           {/* LEFT — FIX: text vertically centered ~40% from top, matches shoulder level in reference */}
-//           <div
-//             className="flex items-start"
-//             style={{
-//               width: '48%',
-//               paddingLeft: 'clamp(3rem, 5vw, 5rem)',
-//               paddingRight: '2rem',
-//               paddingTop: 'clamp(5rem, 18%, 10rem)',
-//               opacity: isVisible ? 1 : 0,
-//               transform: isVisible ? 'translateX(0)' : 'translateX(-24px)',
-//               transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
-//             }}
-//           >
-//             <HeroText isMobile={false} isTablet={false} isDesktop />
-//           </div>
-
-//           {/* RIGHT — form bottom aligned at -2px */}
-//           <div
-//             className="flex items-end justify-end"
-//             style={{
-//               width: '52%',
-//               paddingRight: 'clamp(1.5rem, 3vw, 3rem)',
-//               paddingBottom: '0px',
-//               opacity: isVisible ? 1 : 0,
-//               transform: isVisible ? 'translateX(0)' : 'translateX(24px)',
-//               transition: 'opacity 0.8s ease-out, transform 0.8s ease-out 0.1s',
-//             }}
-//           >
-//             <div
-//               className="w-full bg-white"
-//               style={{
-//                 maxWidth: '460px',
-//                 minWidth: '400px',
-//                 borderRadius: '1.25rem 1.25rem 0 0',
-//                 marginBottom: '-2px',
-//               }}
-//             >
-//               <SearchForm
-//                 formData={formData}
-//                 errors={errors}
-//                 touched={touched}
-//                 onFieldChange={onFieldChange}
-//                 onFieldBlur={onFieldBlur}
-//                 onSubmit={onFormSubmit}
-//                 isMobile={false}
-//                 isTablet={false}
-//               />
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// });
-
-// export default HeroContainer;
-
-
-
 import React, { memo } from 'react';
 import HeroText from './HeroText';
 import SearchForm from './SearchForm';
 import { HERO_IMAGES } from '../constants/heroConstants';
+import { Award, Laptop, GraduationCap, Palette } from 'lucide-react';
 
-const BackgroundImage = memo(function BackgroundImage({ src, isFading, alt = 'Hero Background' }) {
+const COURSE_CHIPS = [
+  { label: 'Professional Courses', icon: Award, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+  { label: 'Online Learning', icon: Laptop, color: 'text-teal-600', bg: 'bg-teal-50' },
+  { label: 'University Programs', icon: GraduationCap, color: 'text-amber-600', bg: 'bg-amber-50' },
+  { label: 'Creative & Design', icon: Palette, color: 'text-purple-600', bg: 'bg-purple-50' },
+];
+
+const BackgroundImage = memo(function BackgroundImage({ src, isFading }) {
   return (
     <img
       src={src}
-      alt={alt}
-      className="absolute inset-0 h-full w-full object-cover"
+      alt="Hero Background"
+      className="absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-out"
       style={{
-        objectPosition: 'center center',
         opacity: isFading ? 0 : 1,
-        transition: 'opacity 0.8s ease-out',
       }}
       loading="eager"
       decoding="async"
@@ -714,9 +29,6 @@ const BackgroundImage = memo(function BackgroundImage({ src, isFading, alt = 'He
 const HeroContainer = memo(function HeroContainer({
   currentImageIndex,
   isFading,
-  isVisible,
-  isMobile,
-  isTablet,
   formData,
   errors,
   touched,
@@ -728,127 +40,69 @@ const HeroContainer = memo(function HeroContainer({
 
   return (
     <div
-      className="hero-root relative overflow-hidden bg-gradient-to-br from-gray-900 to-teal-900"
+      className="hero-root relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#004D40] via-[#005C53] to-[#042F2C] shadow-2xl transition-all duration-300"
       role="banner"
       aria-label="Hero section"
-      style={{
-        borderRadius: isMobile ? '1rem' : '1.5rem',
-      }}
     >
-      {/* Background Image */}
-      <BackgroundImage src={backgroundImage} isFading={isFading} />
-
-      {/* FIX: Bright overlay — matches reference image, no heavy dark shadow */}
-      <div
-        className="absolute inset-0 z-[1]"
-        style={{
-          background: isMobile
-            ? 'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.18) 100%)'
-            : isTablet
-            ? 'linear-gradient(to bottom, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.10) 100%)'
-            : 'linear-gradient(to right, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.03) 40%, rgba(0,0,0,0.0) 100%)',
-        }}
-        aria-hidden="true"
-      />
-
-      {/* MOBILE layout */}
-      {isMobile && (
+      {/* Background image for Desktop / Large screens */}
+      <div className="absolute inset-0 hidden lg:block overflow-hidden">
+        <BackgroundImage src={backgroundImage} isFading={isFading} />
+        {/* Soft overlay gradient to preserve background elements & keep text crisp */}
         <div
-          className="relative z-10 flex flex-col px-4 pt-8 pb-6 gap-6"
-          style={{ animation: 'fadeUp 0.6s ease forwards' }}
-        >
-          <HeroText isMobile isTablet={false} isDesktop={false} />
-          <SearchForm
-            formData={formData}
-            errors={errors}
-            touched={touched}
-            onFieldChange={onFieldChange}
-            onFieldBlur={onFieldBlur}
-            onSubmit={onFormSubmit}
-            isMobile
-            isTablet={false}
-          />
-        </div>
-      )}
+          className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/10 pointer-events-none"
+          aria-hidden="true"
+        />
+      </div>
 
-      {/* TABLET layout */}
-      {isTablet && !isMobile && (
-        <div
-          className="relative z-10 flex flex-col px-8 pt-10 pb-8 gap-8"
-          style={{ animation: 'fadeUp 0.6s ease forwards' }}
-        >
-          <HeroText isMobile={false} isTablet isDesktop={false} />
-          <SearchForm
-            formData={formData}
-            errors={errors}
-            touched={touched}
-            onFieldChange={onFieldChange}
-            onFieldBlur={onFieldBlur}
-            onSubmit={onFormSubmit}
-            isMobile={false}
-            isTablet
-          />
-        </div>
-      )}
+      {/* Decorative subtle background grid pattern for mobile/tablet */}
+      <div className="absolute inset-0 lg:hidden opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
-      {/* DESKTOP layout */}
-      {!isMobile && !isTablet && (
-        <div
-          className="relative z-10 flex"
-          style={{ minHeight: 'clamp(640px, 74vh, 800px)' }}
-        >
-          {/* LEFT — FIX: text vertically centered ~40% from top, matches shoulder level in reference */}
-          <div
-            className="flex items-center"
-            style={{
-              width: '48%',
-              paddingLeft: 'clamp(2rem, 3vw, 3.5rem)',
-              paddingRight: '2rem',
-              paddingTop: '0',
-              paddingBottom: '18%',
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateX(0)' : 'translateX(-24px)',
-              transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
-            }}
-          >
-            <HeroText isMobile={false} isTablet={false} isDesktop />
-          </div>
+      {/* Hero Container Content */}
+      <div className="relative z-10 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 sm:gap-8 lg:gap-10 min-h-0 lg:min-h-[560px] xl:min-h-[600px]">
+          
+          {/* Left Column: Hero Text & Mobile Highlights */}
+          <div className="w-full lg:w-[48%] xl:w-[46%] flex flex-col justify-center gap-6">
+            <HeroText />
 
-          {/* RIGHT — form bottom aligned at -2px */}
-          <div
-            className="flex items-end justify-end"
-            style={{
-              width: '52%',
-              paddingRight: 'clamp(1.5rem, 3vw, 3rem)',
-              paddingBottom: '0px',
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateX(0)' : 'translateX(24px)',
-              transition: 'opacity 0.8s ease-out, transform 0.8s ease-out 0.1s',
-            }}
-          >
-            <div
-              className="w-full bg-white"
-              style={{
-                maxWidth: '460px',
-                minWidth: '400px',
-                borderRadius: '1.25rem 1.25rem 0 0',
-                marginBottom: '-2px',
-              }}
-            >
-              <SearchForm
-                formData={formData}
-                errors={errors}
-                touched={touched}
-                onFieldChange={onFieldChange}
-                onFieldBlur={onFieldBlur}
-                onSubmit={onFormSubmit}
-                isMobile={false}
-                isTablet={false}
-              />
+            {/* Mobile & Tablet category badges preview */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:hidden pt-1">
+              {COURSE_CHIPS.map((chip, idx) => {
+                const Icon = chip.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-2 bg-white/95 backdrop-blur-md px-3 py-2 rounded-xl border border-white/20 shadow-sm"
+                  >
+                    <div className={`p-1.5 rounded-lg ${chip.bg} ${chip.color} shrink-0`}>
+                      <Icon size={16} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-bold text-gray-800 truncate">{chip.label}</p>
+                      <div className="flex text-amber-400 text-[10px]">
+                        {'★'.repeat(5)}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
+
+          {/* Right Column: Search Form Card */}
+          <div className="w-full lg:w-[430px] xl:w-[470px] shrink-0 self-stretch lg:self-center">
+            <SearchForm
+              formData={formData}
+              errors={errors}
+              touched={touched}
+              onFieldChange={onFieldChange}
+              onFieldBlur={onFieldBlur}
+              onSubmit={onFormSubmit}
+            />
+          </div>
+
         </div>
-      )}
+      </div>
     </div>
   );
 });

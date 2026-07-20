@@ -263,7 +263,7 @@ const ChatSidebar = ({
               onClick={(event) => event.stopPropagation()}
               style={{
                 position: "absolute",
-                left: 0,
+                left: -10,
                 bottom: "calc(100% + 8px)",
                 zIndex: 50,
                 width: 240,

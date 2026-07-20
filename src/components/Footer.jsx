@@ -149,24 +149,19 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8">
+          <div className="lg:col-span-5 flex flex-col gap-6 sm:grid sm:grid-cols-3 sm:gap-8">
             {Object.entries(footerLinks).map(([title, links]) => (
-              <div
-                key={title}
-                className={
-                  title === "Popular Searches" ? "col-span-2 sm:col-span-1" : ""
-                }
-              >
+               <div key={title}>
                 <h4 className="text-[14px] md:text-[15px] text-white font-heading font-medium mb-4 md:mb-5 tracking-tight">
                   {title}
                 </h4>
-                <ul className="space-y-2.5 md:space-y-3">
+                 <ul className="flex flex-wrap gap-x-3 gap-y-1.5 sm:flex-col sm:gap-y-2.5 md:gap-y-3">
                   {links.map((link, i) => (
                     <li
                       key={i}
                       className="flex items-start gap-2 group cursor-pointer"
                     >
-                      <span className="text-white mt-1.5 h-1 w-1 rounded-full bg-white shrink-0" />
+                      <span className="text-white mt-1.5 h-1 w-1 rounded-full bg-white shrink-0 hidden sm:inline-block" />
 
                       {link === "About Canvade" ? (
   <Link

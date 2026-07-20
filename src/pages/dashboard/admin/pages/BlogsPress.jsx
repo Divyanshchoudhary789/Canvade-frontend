@@ -122,6 +122,10 @@ const SkeletonRow = () => (
   </tr>
 );
 
+const TableImageSkeleton = () => (
+  <div className="w-26 h-16 rounded-xl bg-slate-100 shrink-0 animate-pulse" />
+);
+
 const splitList = (value) =>
   String(value || "")
     .split(/[\n,]/)
@@ -525,6 +529,7 @@ export default function BlogsPressDashboard() {
   const [pendingActionId, setPendingActionId] = useState(null);
   const [actionError, setActionError] = useState("");
   const [deleteCandidate, setDeleteCandidate] = useState(null);
+  const [loadedImages, setLoadedImages] = useState({});
 
   const fetchUpdates = useCallback(async () => {
     setIsLoading(true);
@@ -857,10 +862,23 @@ export default function BlogsPressDashboard() {
                             title="View live update page"
                             className="flex flex-row items-start gap-3"
                           >
+                            {loadedImages[post.id] ? (
+                              <img
+                                src={post.image}
+                                className="w-26 h-16 rounded-xl object-cover border border-slate-200/50 bg-slate-50 shrink-0 shadow-3xs"
+                                alt=""
+                                loading="lazy"
+                              />
+                            ) : (
+                              <TableImageSkeleton />
+                            )}
                             <img
                               src={post.image}
-                              className="w-26 h-16 rounded-xl object-cover border border-slate-200/50 bg-slate-50 shrink-0 shadow-3xs"
                               alt=""
+                              loading="lazy"
+                              onLoad={() => setLoadedImages((prev) => ({ ...prev, [post.id]: true }))}
+                              onError={() => setLoadedImages((prev) => ({ ...prev, [post.id]: true }))}
+                              className="hidden"
                             />
                             <div className="min-w-0 flex flex-col space-y-2">
                               <h4 className="text-[13.5px] font-bold text-slate-800 leading-tight truncate group-hover:text-blue-600 transition-colors">

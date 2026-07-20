@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -13,7 +13,6 @@ const formatPrice = (value) => {
   if (typeof value === "string") return value;
   return `₹ ${Number(value).toLocaleString("en-IN")}`;
 };
-import { useEffect, useState } from "react";
 import { getCourseReviews } from "../../../api/courseApi";
 
 const DEFAULT_CARD = {
@@ -27,6 +26,12 @@ const DEFAULT_CARD = {
   actualPrice: "₹ 3,40,000",
   rating: "4.8",
 };
+
+const CourseImageSkeleton = () => (
+  <div className="absolute inset-0 bg-gray-100 animate-pulse flex items-center justify-center">
+    <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
+  </div>
+);
 
 export default function CourseCard({
   item,
@@ -84,8 +89,15 @@ export default function CourseCard({
   );
   const [liveRating, setLiveRating] = useState(null);
   const [reviewCount, setReviewCount] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const courseId = item?.courseId || item?._id || item?.id;
+
+  useEffect(() => {
+    setImageLoaded(false);
+    setImageError(false);
+  }, [image]);
 
   useEffect(() => {
     if (!courseId) return;
@@ -119,23 +131,35 @@ export default function CourseCard({
 
   const rating = liveRating;
 
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+    setImageError(false);
+  }, []);
+
+  const handleImageError = useCallback(() => {
+    setImageLoaded(true);
+    setImageError(true);
+  }, []);
+
   return (
     <div
       onClick={onCardClick}
       className={`flex-shrink-0 ${widthClass} snap-start bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm transition-all duration-500 hover:shadow-xl group cursor-pointer ${
         visible ? item.anim : "opacity-0 translate-y-10"
       }`}
+      style={{ contain: "layout style paint" }}
     >
       <div className="p-2 pb-0">
         <div className="relative">
           <div className="relative h-44 md:h-48 w-full overflow-hidden rounded-t-[8px] rounded-bl-[15px]">
+            {!imageLoaded && <CourseImageSkeleton />}
             <img
-              src={image}
+              src={imageError ? "course.png" : image}
               alt={title}
-              onError={(e) => {
-                e.target.src = "course.png";
-              }}
-              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+              className={`w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105 ${imageLoaded ? "opacity-100" : "absolute opacity-0"}`}
+              style={{ position: imageLoaded ? "relative" : "absolute", inset: 0 }}
             />
 
             <div className="absolute bottom-0 right-0 bg-white pl-2 pt-0 rounded-tl-lg flex items-center gap-2 h-8">

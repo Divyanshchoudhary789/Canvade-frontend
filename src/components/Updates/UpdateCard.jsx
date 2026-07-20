@@ -10,6 +10,12 @@ export const tagColorMap = {
   News: "bg-rose-50 text-rose-700 border border-rose-100",
 };
 
+const ImageSkeleton = () => (
+  <div className="h-full w-full bg-gray-100 animate-pulse flex items-center justify-center">
+    <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
+  </div>
+);
+
 export default function UpdateCard({
   image,
   tag,
@@ -24,9 +30,16 @@ export default function UpdateCard({
   onClick,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const menuRef = useRef(null);
   const updateId = updateIdProp || _id || id;
   const updateLink = link || url || (updateId ? `${window.location.origin}/updates/${updateId}` : window.location.href);
+
+  useEffect(() => {
+    setImageLoaded(false);
+    setImageError(false);
+  }, [image]);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -64,14 +77,18 @@ export default function UpdateCard({
     setMenuOpen(false);
   };
 
-  // Grab the color classes based on the tag string, or fallback to gray if not matched
   const resolvedCatColor =
     tagColorMap[tag] || "bg-gray-50 text-gray-700 border border-gray-100";
+
+  const displayImage = imageError
+    ? "https://placehold.co/600x400?text=No+Image"
+    : image;
 
   return (
     <div
       onClick={onClick}
       className={`relative flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-md ${onClick ? "cursor-pointer" : ""}`}
+      style={{ contain: "layout style paint" }}
     >
       <div ref={menuRef} className="absolute right-3 top-3 z-20">
         <button
@@ -121,14 +138,17 @@ export default function UpdateCard({
       </div>
 
       <div className="h-44 overflow-hidden bg-gray-100 sm:h-48 2xl:h-52">
+        {!imageLoaded && !imageError && <ImageSkeleton />}
         <img
-          src={image}
+          src={displayImage}
           alt={title}
+          onLoad={() => setImageLoaded(true)}
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = "https://placehold.co/600x400?text=No+Image";
+            setImageError(true);
           }}
-          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+          className={`h-full w-full object-cover transition-transform duration-500 hover:scale-105 ${imageLoaded ? "opacity-100" : "absolute opacity-0"}`}
+          style={{ position: imageLoaded ? "relative" : "absolute", inset: 0 }}
         />
       </div>
 
