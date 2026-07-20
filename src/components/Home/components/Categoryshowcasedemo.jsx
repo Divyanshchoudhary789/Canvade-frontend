@@ -56,7 +56,7 @@ export default function CategoryShowcaseDemo() {
 
   return (
     <div
-      className="py-4 md:py-6 w-full max-w-[1700px] mx-auto px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 min-h-[460px] sm:min-h-[500px] md:min-h-[520px] flex items-center justify-center overflow-hidden"
+      className="py-4 md:py-6 w-full max-w-[1700px] mx-auto px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 min-h-[320px] sm:min-h-[380px] md:min-h-[420px] flex items-center justify-center overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

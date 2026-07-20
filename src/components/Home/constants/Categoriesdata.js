@@ -193,9 +193,9 @@ export const categories = [
       },
     ],
     images: [
-      { src: 'https://picsum.photos/seed/dm1/400/400', alt: 'Marketer reviewing campaign reports' },
-      { src: 'https://picsum.photos/seed/dm2/400/300', alt: 'Marketer working on laptop' },
-      { src: 'https://picsum.photos/seed/dm3/420/420', alt: 'Marketer reviewing performance charts' },
+      { src: '/digital01.avif', alt: 'Digital marketing campaign dashboard' },
+      { src: '/digital02.avif', alt: 'Marketer working on digital strategy' },
+      { src: '/digital03.avif', alt: 'Digital marketing performance analytics' },
     ],
   },
   {

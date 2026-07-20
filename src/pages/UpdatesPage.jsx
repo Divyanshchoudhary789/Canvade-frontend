@@ -11,6 +11,20 @@ import UpdateCard from "../components/Updates/UpdateCard";
 
 const ITEMS_PER_PAGE = 6;
 
+const CATEGORIES = [
+  { name: "All Updates" },
+  { name: "Announcements" },
+  { name: "Events" },
+  { name: "New Courses" },
+  { name: "Results" },
+];
+
+const YEARS = [
+  { year: "2026" },
+  { year: "2025" },
+  { year: "2024" },
+];
+
 const UpdatesPage = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -81,7 +95,7 @@ const UpdatesPage = () => {
           Categories
         </h4>
         <div className="space-y-1">
-          {categories.map((cat) => (
+          {CATEGORIES.map((cat) => (
             <div
               key={cat.name}
               onClick={() => handleCategoryChange(cat.name)}
@@ -102,7 +116,7 @@ const UpdatesPage = () => {
           <ChevronDown size={18} className="text-gray-700 " />
         </div>
         <div className="space-y-1">
-          {years.map((item) => (
+          {YEARS.map((item) => (
             <div
               key={item.year}
               onClick={() => handleYearChange(item.year)}

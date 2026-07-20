@@ -30,21 +30,21 @@ const features = [
 
 export default function WhyChooseCanvade() {
   return (
-    <section className="w-full bg-white py-16 px-6">
-      <div className="w-full max-w-[1600px] mx-auto bg-slate-50 rounded-3xl p-6 sm:p-10">
+    <section className="w-full bg-white py-10 sm:py-14 md:py-16 px-4 sm:px-6">
+      <div className="w-full max-w-[1400px] mx-auto bg-slate-50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10">
         {/* Heading */}
-        <h2 className="flex flex-wrap items-center justify-center gap-2 text-3xl md:text-4xl font-bold text-slate-900 mb-12">
+        <h2 className="flex flex-wrap items-center justify-center gap-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-8 sm:mb-10 md:mb-12">
           <span>Why Students Choose</span>
           <img
             src="/canvade1.png"
             alt="Canvade"
-            className="h-8 md:h-10 w-auto"
+            className="h-8 sm:h-10 md:h-12 w-auto"
           />
         </h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-6 sm:gap-8 md:gap-10 items-start">
           {/* Left: related image placeholder */}
-          <div className="w-full h-full min-h-[380px] rounded-2xl overflow-hidden">
+          <div className="w-full h-full min-h-[220px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[380px] rounded-xl sm:rounded-2xl overflow-hidden">
             <img
               src="/final image.avif"
               alt="Students learning at an institute"
@@ -53,16 +53,16 @@ export default function WhyChooseCanvade() {
           </div>
 
           {/* Right: feature grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10">
             {features.map(({ icon: Icon, title, description }) => (
               <div key={title}>
-                <div className="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center mb-4">
-                  <Icon className="w-7 h-7 text-slate-900" strokeWidth={1.75} />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg sm:rounded-xl bg-amber-100 flex items-center justify-center mb-3 sm:mb-4">
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-slate-900" strokeWidth={1.75} />
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                <h3 className="text-base sm:text-lg md:text-lg font-semibold text-slate-900 mb-1.5 sm:mb-2">
                   {title}
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                   {description}
                 </p>
               </div>

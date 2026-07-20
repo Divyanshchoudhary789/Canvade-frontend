@@ -231,8 +231,6 @@ export default function UnderstandCanvade() {
             onScroll={handleScroll}
             className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 pb-3 px-2 -mx-2 no-scrollbar scroll-smooth"
             style={{
-              touchAction: "pan-x pan-y",
-              overscrollBehaviorX: "contain",
               scrollbarWidth: "none",
               msOverflowStyle: "none",
             }}

@@ -309,7 +309,7 @@ export default function WorkshopsRegistration() {
 
         <div
           ref={scrollRef}
-          className="flex xl:grid xl:grid-cols-4 gap-5 overflow-x-auto xl:overflow-x-visible pb-6 no-scrollbar snap-x snap-mandatory scroll-smooth overscroll-x-contain touch-pan-x"
+          className="flex xl:grid xl:grid-cols-4 gap-5 overflow-x-auto xl:overflow-x-visible pb-6 no-scrollbar snap-x snap-mandatory scroll-smooth"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {isLoading

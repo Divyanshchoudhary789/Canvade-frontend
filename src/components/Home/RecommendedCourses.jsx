@@ -410,7 +410,7 @@ export default function RecommendedCourses() {
 
             <div
               ref={scrollRef}
-              className="flex xl:grid xl:grid-cols-4 gap-5 overflow-x-auto xl:overflow-x-visible pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth overscroll-x-contain touch-pan-x"
+              className="flex xl:grid xl:grid-cols-4 gap-5 overflow-x-auto xl:overflow-x-visible pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
             >
               {isLoading
                 ? skeletonCards.map((_, index) => (

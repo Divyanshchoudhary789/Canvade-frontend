@@ -72,7 +72,7 @@ const adminMenuItems = [
 const AdminSidebar = ({ activeTab, setActiveTab, closeSidebar }) => {
   return (
     <aside className="w-[280px] h-full shrink-0 bg-white border border-slate-100 rounded-2xl p-4 flex flex-col gap-2 shadow-sm overflow-y-auto no-scrollbar">
-      <div className="flex items-center justify-between lg:hidden mb-2">
+      <div className="flex items-center justify-between lg:hidden mb-3">
         <span className="text-sm font-bold text-slate-700 font-sans">Menu</span>
         <button
           onClick={closeSidebar}
@@ -81,7 +81,7 @@ const AdminSidebar = ({ activeTab, setActiveTab, closeSidebar }) => {
           <X className="w-4 h-4" />
         </button>
       </div>
-      <nav className="flex-1 space-y-4">
+      <nav className="flex-1 space-y-5">
         {adminMenuItems.map((item) => {
           const isActive = activeTab === item.id;
           const isPromotion = item.id === "promotions";
@@ -103,10 +103,10 @@ const AdminSidebar = ({ activeTab, setActiveTab, closeSidebar }) => {
           }
 
           return (
-            <div key={item.id} className="w-full flex flex-col gap-1">
+            <div key={item.id} className="w-full flex flex-col gap-1.5">
               <button
                 onClick={() => { setActiveTab(item.id); closeSidebar?.(); }}
-                className={`min-w-0 w-full text-left px-4 py-2.5 rounded-xl transition-all duration-200 group flex items-center gap-3 ${currentBtnStyle}`}
+                className={`min-w-0 w-full text-left px-4 py-3 rounded-xl transition-all duration-200 group flex items-center gap-3 ${currentBtnStyle}`}
               >
                 <item.icon
                   className={`w-[19px] h-[19px] shrink-0 ${

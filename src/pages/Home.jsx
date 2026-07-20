@@ -49,24 +49,24 @@ export default function Home() {
         
         {/* <CollegeTrustLogos /> */}
         <CourseCategories />
-        <CourseCategoriesTwo />
-        <CourseCategoriesThree />
+        {/* <CourseCategoriesTwo />
+        <CourseCategoriesThree /> */}
         <CategoryShowcaseDemo />
         <AdvertisementBanner />
         <InstituteRecommendationTwo />
-        <InstituteRecommendationThree />
+        {/* <InstituteRecommendationThree /> */}
         {/* <EmptyHomeSection /> */}
         <WhyChooseCanvade />
         <AdvertisementBanner />
         <CourseCategoriesFour />
-        <CourseCategoriesFive />
-        <CourseCategoriesSix />
+        {/* <CourseCategoriesFive />
+        <CourseCategoriesSix /> */}
         <CommunityHero />
         <AdvertisementBanner />
         {/* <EmptyHomeSection /> */}
 
         <InstituteRecommendation />
-        <InstituteRecommendationFour />
+        {/* <InstituteRecommendationFour /> */}
         {/* <EmptyHomeSection /> */}
         {/* <WorkshopsRegistration /> */}
         <NewsletterSection />
