@@ -192,6 +192,7 @@ export const categories = [
           'Explore and compare top Digital Marketing institutes, certification programs, course fees, learning modes, ratings, and student reviews to choose the course that best supports your career or business goals.',
       },
     ],
+    image: { src: '/12-digital-marketing.png', alt: 'Digital marketing professionals at work' },
     images: [
       { src: '/digital01.avif', alt: 'Digital marketing campaign dashboard' },
       { src: '/digital02.avif', alt: 'Marketer working on digital strategy' },

@@ -60,13 +60,13 @@ export default function CategoryShowcase({
                         decoding="async"
                     />
                 ) : (
-                    <div className="relative w-full mx-auto" style={{ maxWidth: 280, aspectRatio: '11 / 9' }}>
+                    <div className="relative w-full mx-auto max-w-[320px] sm:max-w-[400px] md:max-w-[460px] lg:max-w-[500px]" style={{ aspectRatio: '1.2 / 1' }}>
                         {topLeft && (
                             <img
                                 src={topLeft.src}
                                 alt={topLeft.alt || ''}
-                                className="absolute top-0 left-0 object-cover rounded-2xl shadow-lg transition-all duration-500"
-                                style={{ width: '58%', aspectRatio: '1' }}
+                                className="absolute top-0 left-0 object-cover rounded-2xl shadow-xl transition-all duration-500 hover:scale-105"
+                                style={{ width: '56%', aspectRatio: '1' }}
                                 loading="eager"
                             />
                         )}
@@ -74,8 +74,8 @@ export default function CategoryShowcase({
                             <img
                                 src={topRight.src}
                                 alt={topRight.alt || ''}
-                                className="absolute top-11 -right-11 object-cover rounded-2xl shadow-lg transition-all duration-500"
-                                style={{ width: '46%', aspectRatio: '4/4' }}
+                                className="absolute top-[10%] right-0 object-cover rounded-2xl shadow-xl transition-all duration-500 hover:scale-105"
+                                style={{ width: '46%', aspectRatio: '1' }}
                                 loading="eager"
                             />
                         )}
@@ -83,8 +83,8 @@ export default function CategoryShowcase({
                             <img
                                 src={bottomCenter.src}
                                 alt={bottomCenter.alt || ''}
-                                className="absolute -bottom-11 left-1/2 object-cover rounded-2xl shadow-xl transition-all duration-500"
-                                style={{ width: '62%', aspectRatio: '1', transform: 'translateX(-50%)' }}
+                                className="absolute bottom-0 left-[22%] object-cover rounded-2xl shadow-2xl transition-all duration-500 hover:scale-105"
+                                style={{ width: '58%', aspectRatio: '1' }}
                                 loading="eager"
                             />
                         )}

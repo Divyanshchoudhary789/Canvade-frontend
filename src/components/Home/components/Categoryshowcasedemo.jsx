@@ -61,9 +61,8 @@ export default function CategoryShowcaseDemo() {
       onMouseLeave={() => setIsPaused(false)}
     >
       <div
-        className={`w-full transition-opacity duration-400 ease-in-out transform-gpu ${
-          isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.995]'
-        }`}
+        className={`w-full transition-opacity duration-400 ease-in-out transform-gpu ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.995]'
+          }`}
       >
         <CategoryShowcase
           image={cat.image}
