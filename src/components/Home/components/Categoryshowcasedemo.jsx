@@ -4,7 +4,7 @@ import CategoryShowcase from './Categoryshowcase';
 import { categories } from '../constants/Categoriesdata';
 
 const ROTATE_INTERVAL_MS = 6000;
-const FADE_DURATION_MS = 400;
+const FADE_DURATION_MS = 300;
 
 export default function CategoryShowcaseDemo() {
   const navigate = useNavigate();
@@ -54,15 +54,49 @@ export default function CategoryShowcaseDemo() {
     navigate(`/search?category=${encodeURIComponent(category)}`);
   };
 
+  const handleTabClick = (index) => {
+    if (index === currentIndex) return;
+    setIsVisible(false);
+    setTimeout(() => {
+      setCurrentIndex(index);
+      setIsVisible(true);
+    }, FADE_DURATION_MS / 2);
+  };
+
   return (
     <div
-      className="py-4 md:py-6 w-full max-w-[1700px] mx-auto px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 min-h-[320px] sm:min-h-[380px] md:min-h-[420px] flex items-center justify-center overflow-hidden"
+      className="py-4 md:py-6 w-full max-w-[1700px] mx-auto px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 min-h-[320px] sm:min-h-[380px] md:min-h-[420px] flex flex-col items-center justify-center overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
+      {/* Category Tabs Header (Commented out)
+      <div className="mb-4 sm:mb-6 w-full overflow-x-auto no-scrollbar py-1 px-1">
+        <div className="flex items-center justify-start md:justify-center gap-2 min-w-max mx-auto">
+          {categories.map((item, idx) => {
+            const isActive = idx === currentIndex;
+            return (
+              <button
+                key={item.id || item.category}
+                type="button"
+                onClick={() => handleTabClick(idx)}
+                className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? 'bg-[#007965] text-white shadow-sm scale-105 font-semibold'
+                    : 'bg-slate-100/90 text-slate-600 hover:bg-slate-200/90 hover:text-slate-900'
+                }`}
+              >
+                {item.category}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      */}
+
       <div
-        className={`w-full transition-opacity duration-400 ease-in-out transform-gpu ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.995]'
-          }`}
+        className={`w-full transition-opacity duration-300 ease-in-out transform-gpu ${
+          isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.995]'
+        }`}
       >
         <CategoryShowcase
           image={cat.image}
@@ -76,3 +110,4 @@ export default function CategoryShowcaseDemo() {
     </div>
   );
 }
+

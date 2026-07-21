@@ -1,4 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+/**
+ * PreloadedImage
+ * ------------------------------------------------------------------
+ * Handles image rendering with zero-flicker double-buffering.
+ * Keeps the old image rendered while the new image loads, and applies
+ * smooth fade transitions without unmounting DOM elements.
+ */
+function PreloadedImage({ src, alt, className = '', style = {}, loading = 'eager' }) {
+    const [displaySrc, setDisplaySrc] = useState(src);
+    const [isLoaded, setIsLoaded] = useState(true);
+
+    useEffect(() => {
+        if (!src) return;
+        if (src === displaySrc) {
+            setIsLoaded(true);
+            return;
+        }
+
+        let isSubscribed = true;
+        const img = new Image();
+        img.src = src;
+
+        if (img.complete) {
+            setDisplaySrc(src);
+            setIsLoaded(true);
+        } else {
+            setIsLoaded(false);
+            img.onload = () => {
+                if (isSubscribed) {
+                    setDisplaySrc(src);
+                    setIsLoaded(true);
+                }
+            };
+            img.onerror = () => {
+                if (isSubscribed) {
+                    setDisplaySrc(src);
+                    setIsLoaded(true);
+                }
+            };
+        }
+
+        return () => {
+            isSubscribed = false;
+        };
+    }, [src, displaySrc]);
+
+    return (
+        <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-xl">
+            {displaySrc && (
+                <img
+                    src={displaySrc}
+                    alt={alt || ''}
+                    className={`${className} transition-opacity duration-300 ease-in-out ${
+                        isLoaded ? 'opacity-100 scale-100' : 'opacity-85 scale-[0.99]'
+                    }`}
+                    style={style}
+                    loading={loading}
+                    decoding="async"
+                />
+            )}
+        </div>
+    );
+}
 
 /**
  * CategoryShowcase
@@ -49,44 +113,44 @@ export default function CategoryShowcase({
         <div
             className={`w-full max-w-[1600px] mx-auto bg-slate-50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-center min-h-[340px] sm:min-h-[400px] md:min-h-[440px] lg:min-h-[480px] transition-all duration-500 ease-in-out ${className}`}
         >
-            {/* Left Column: Image collage container with stable min-height */}
-            <div className="w-full flex items-center justify-center min-h-[240px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[360px] overflow-hidden relative">
+            {/* Left Column: Image container with stable min-height and fixed aspect ratio */}
+            <div className="w-full flex items-center justify-center min-h-[260px] sm:min-h-[300px] md:min-h-[360px] lg:min-h-[420px] max-h-[500px] overflow-hidden relative">
                 {image ? (
-                    <img
-                        src={image.src}
-                        alt={image.alt || ''}
-                        className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[560px] xl:max-w-[640px] h-auto max-h-[260px] sm:max-h-[340px] md:max-h-[420px] lg:max-h-[480px] xl:max-h-[500px] object-contain mx-auto transition-all duration-500"
-                        loading="eager"
-                        decoding="async"
-                    />
+                    <div className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[560px] xl:max-w-[640px] aspect-[4/3] relative flex items-center justify-center mx-auto">
+                        <PreloadedImage
+                            src={image.src}
+                            alt={image.alt || ''}
+                            className="w-full h-full object-contain mx-auto"
+                        />
+                    </div>
                 ) : (
                     <div className="relative w-full mx-auto max-w-[320px] sm:max-w-[400px] md:max-w-[460px] lg:max-w-[500px]" style={{ aspectRatio: '1.2 / 1' }}>
                         {topLeft && (
-                            <img
-                                src={topLeft.src}
-                                alt={topLeft.alt || ''}
-                                className="absolute top-0 left-0 object-cover rounded-2xl shadow-xl transition-all duration-500 hover:scale-105"
-                                style={{ width: '56%', aspectRatio: '1' }}
-                                loading="eager"
-                            />
+                            <div className="absolute top-0 left-0" style={{ width: '56%', aspectRatio: '1' }}>
+                                <PreloadedImage
+                                    src={topLeft.src}
+                                    alt={topLeft.alt || ''}
+                                    className="w-full h-full object-cover rounded-2xl shadow-xl hover:scale-105 transition-all duration-500"
+                                />
+                            </div>
                         )}
                         {topRight && (
-                            <img
-                                src={topRight.src}
-                                alt={topRight.alt || ''}
-                                className="absolute top-[10%] right-0 object-cover rounded-2xl shadow-xl transition-all duration-500 hover:scale-105"
-                                style={{ width: '46%', aspectRatio: '1' }}
-                                loading="eager"
-                            />
+                            <div className="absolute top-[10%] right-0" style={{ width: '46%', aspectRatio: '1' }}>
+                                <PreloadedImage
+                                    src={topRight.src}
+                                    alt={topRight.alt || ''}
+                                    className="w-full h-full object-cover rounded-2xl shadow-xl hover:scale-105 transition-all duration-500"
+                                />
+                            </div>
                         )}
                         {bottomCenter && (
-                            <img
-                                src={bottomCenter.src}
-                                alt={bottomCenter.alt || ''}
-                                className="absolute bottom-0 left-[22%] object-cover rounded-2xl shadow-2xl transition-all duration-500 hover:scale-105"
-                                style={{ width: '58%', aspectRatio: '1' }}
-                                loading="eager"
-                            />
+                            <div className="absolute bottom-0 left-[22%]" style={{ width: '58%', aspectRatio: '1' }}>
+                                <PreloadedImage
+                                    src={bottomCenter.src}
+                                    alt={bottomCenter.alt || ''}
+                                    className="w-full h-full object-cover rounded-2xl shadow-2xl hover:scale-105 transition-all duration-500"
+                                />
+                            </div>
                         )}
                     </div>
                 )}
