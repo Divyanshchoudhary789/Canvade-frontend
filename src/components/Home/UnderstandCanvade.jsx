@@ -201,11 +201,10 @@ export default function UnderstandCanvade() {
 
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-10 max-w-xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-semibold text-slate-900 tracking-tight mb-2">
             Understand{" "}
             <span className="text-emerald-600 relative inline-block">
               CANVADE
-              <span className="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500/20 rounded-full" />
             </span>{" "}
             in Seconds
           </h2>

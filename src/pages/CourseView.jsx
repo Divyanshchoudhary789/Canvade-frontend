@@ -555,6 +555,7 @@ export default function CourseView() {
   const [reviewCount, setReviewCount] = useState(0);
   const [courseRating, setCourseRating] = useState(0);
   const [featuredReviewIndex, setFeaturedReviewIndex] = useState(0);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const userRole = (
     localStorage.getItem("Role") ||
@@ -1536,6 +1537,10 @@ export default function CourseView() {
   const activeGalleryImage = galleryMedia.length
     ? galleryMedia[currentSlide % galleryMedia.length]
     : "";
+
+  useEffect(() => {
+    setImgLoaded(false);
+  }, [activeGalleryImage]);
   const slide = GALLERY_SLIDES[currentSlide % GALLERY_SLIDES.length];
   const accent = ACCENT_COLORS[slide.accent];
   const courseDuration =
@@ -1695,90 +1700,126 @@ export default function CourseView() {
       <div className="mt-3 sm:mt-6 w-full bg-white ">
         <div className="max-w-[1700px] mx-auto px-4 md:px-8 lg:px-16 py-4 md:py-6">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch lg:min-h-[300px]">
-            <div className="w-full lg:w-[400px] xl:w-[500px]  shrink-0">
-              <div
-                className={`relative rounded-xl sm:rounded-2xl overflow-hidden shadow-sm
-                         w-full aspect-video lg:aspect-auto lg:h-full
-                         flex flex-col justify-between p-4 group select-none
-                         ${activeGalleryImage ? "bg-white border border-gray-100" : `bg-gradient-to-br ${slide.bg}`}`}
-              >
-                {activeGalleryImage ? (
-                  <img
-                    src={activeGalleryImage}
-                    alt={courseTitle}
-                    className="absolute inset-0 h-full w-full object-cover  bg-white"
-                  />
-                ) : (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/60 z-0" />
-                    <div
-                      className={`absolute top-4 right-4 w-32 h-32 rounded-full border-2 ${accent.ring} opacity-20`}
-                    />
-                    <div
-                      className={`absolute -bottom-6 -right-6 w-48 h-48 rounded-full border-2 ${accent.ring} opacity-10`}
-                    />
-                  </>
-                )}
-
-                {!activeGalleryImage && (
-                  <div className="z-10 flex flex-col items-center justify-center text-center my-auto py-4">
-                    <div
-                      className={`w-14 h-14 bg-gradient-to-br ${accent.bg} rounded-full border-2 ${accent.ring}
-                                 mb-3 flex items-center justify-center shadow-lg cursor-pointer
-                                 hover:scale-105 transition-transform`}
-                    >
-                      <Play
-                        size={20}
-                        className="text-white fill-white ml-0.5"
-                      />
-                    </div>
-                    <h4
-                      className={`text-white font-black text-xl sm:text-2xl md:text-3xl tracking-tight drop-shadow-lg ${accent.text}`}
-                      style={{
-                        WebwebkitTextStroke: "1px rgba(255,255,255,0.1)",
-                      }}
-                    >
-                      {slide.label}
-                    </h4>
-                    <p
-                      className={`${accent.text} text-xs font-bold tracking-[0.25em] uppercase mt-1`}
-                    >
-                      {slide.sub}
-                    </p>
+            <div className="w-full lg:w-[400px] xl:w-[500px] shrink-0">
+              {loading ? (
+                <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-gray-100 bg-gray-100 shadow-sm w-full aspect-video lg:aspect-auto lg:h-full min-h-[220px] lg:min-h-[300px] p-4 flex flex-col justify-between animate-pulse">
+                  <div className="flex justify-between items-center z-10">
+                    <div className="h-6 w-24 bg-gray-200 rounded-full" />
+                    <div className="h-6 w-12 bg-gray-200 rounded-md" />
                   </div>
-                )}
 
-                <div className="absolute inset-x-3 top-1/2 -translate-y-1/2 flex justify-between z-10">
-                  <button
-                    onClick={prevSlide}
-                    className="w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white
-                             flex items-center justify-center hover:bg-black/80 transition-colors"
-                  >
-                    <ChevronLeft size={18} />
-                  </button>
-                  <button
-                    onClick={nextSlide}
-                    className="w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white
-                             flex items-center justify-center hover:bg-black/80 transition-colors"
-                  >
-                    <ChevronRight size={18} />
-                  </button>
+                  <div className="flex flex-col items-center justify-center my-auto py-6 z-10 gap-3">
+                    <div className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center">
+                      <svg className="w-7 h-7 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div className="h-4 w-36 bg-gray-200 rounded-md" />
+                  </div>
+
+                  <div className="flex justify-center gap-1.5 z-10">
+                    <div className="h-1.5 w-6 bg-gray-300 rounded-full" />
+                    <div className="h-1.5 w-1.5 bg-gray-200 rounded-full" />
+                    <div className="h-1.5 w-1.5 bg-gray-200 rounded-full" />
+                    <div className="h-1.5 w-1.5 bg-gray-200 rounded-full" />
+                  </div>
                 </div>
+              ) : (
+                <div
+                  className={`relative rounded-xl sm:rounded-2xl overflow-hidden shadow-sm
+                           w-full aspect-video lg:aspect-auto lg:h-full
+                           flex flex-col justify-between p-4 group select-none
+                           ${activeGalleryImage ? "bg-white border border-gray-100" : `bg-gradient-to-br ${slide.bg}`}`}
+                >
+                  {activeGalleryImage ? (
+                    <>
+                      {!imgLoaded && (
+                        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center z-10">
+                          <svg className="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                      )}
+                      <img
+                        src={activeGalleryImage}
+                        alt={courseTitle}
+                        onLoad={() => setImgLoaded(true)}
+                        onError={() => setImgLoaded(true)}
+                        className={`absolute inset-0 h-full w-full object-cover bg-white transition-opacity duration-300 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/60 z-0" />
+                      <div
+                        className={`absolute top-4 right-4 w-32 h-32 rounded-full border-2 ${accent.ring} opacity-20`}
+                      />
+                      <div
+                        className={`absolute -bottom-6 -right-6 w-48 h-48 rounded-full border-2 ${accent.ring} opacity-10`}
+                      />
+                    </>
+                  )}
 
-                <div className="z-10 self-start bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md font-medium">
-                  {(currentSlide % galleryCount) + 1} / {galleryCount}
-                </div>
+                  {!activeGalleryImage && (
+                    <div className="z-10 flex flex-col items-center justify-center text-center my-auto py-4">
+                      <div
+                        className={`w-14 h-14 bg-gradient-to-br ${accent.bg} rounded-full border-2 ${accent.ring}
+                                   mb-3 flex items-center justify-center shadow-lg cursor-pointer
+                                   hover:scale-105 transition-transform`}
+                      >
+                        <Play
+                          size={20}
+                          className="text-white fill-white ml-0.5"
+                        />
+                      </div>
+                      <h4
+                        className={`text-white font-black text-xl sm:text-2xl md:text-3xl tracking-tight drop-shadow-lg ${accent.text}`}
+                        style={{
+                          WebwebkitTextStroke: "1px rgba(255,255,255,0.1)",
+                        }}
+                      >
+                        {slide.label}
+                      </h4>
+                      <p
+                        className={`${accent.text} text-xs font-bold tracking-[0.25em] uppercase mt-1`}
+                      >
+                        {slide.sub}
+                      </p>
+                    </div>
+                  )}
 
-                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                  {Array.from({ length: galleryCount }).map((_, i) => (
+                  <div className="absolute inset-x-3 top-1/2 -translate-y-1/2 flex justify-between z-10">
                     <button
-                      key={i}
-                      onClick={() => setCurrentSlide(i)}
-                      className={`h-1.5 rounded-full transition-all ${i === currentSlide % galleryCount ? "bg-teal-400 w-5" : activeGalleryImage ? "bg-slate-300 w-1.5" : "bg-white/35 w-1.5"}`}
-                    />
-                  ))}
+                      onClick={prevSlide}
+                      className="w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white
+                               flex items-center justify-center hover:bg-black/80 transition-colors"
+                    >
+                      <ChevronLeft size={18} />
+                    </button>
+                    <button
+                      onClick={nextSlide}
+                      className="w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white
+                               flex items-center justify-center hover:bg-black/80 transition-colors"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
+                  </div>
+
+                  <div className="z-10 self-start bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md font-medium">
+                    {(currentSlide % galleryCount) + 1} / {galleryCount}
+                  </div>
+
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                    {Array.from({ length: galleryCount }).map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentSlide(i)}
+                        className={`h-1.5 rounded-full transition-all ${i === currentSlide % galleryCount ? "bg-teal-400 w-5" : activeGalleryImage ? "bg-slate-300 w-1.5" : "bg-white/35 w-1.5"}`}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="w-full lg:flex-1 min-w-0 space-y-5">
@@ -1897,7 +1938,23 @@ export default function CourseView() {
               )}
             </div>
 
-            {!loading && (
+            {loading ? (
+              <div className="w-full lg:w-[340px] xl:w-[360px] shrink-0">
+                <div className="flex flex-col rounded-2xl border border-gray-100 bg-white p-5 shadow-sm space-y-4 animate-pulse">
+                  <div className="h-8 w-36 bg-gray-200 rounded-md" />
+                  <div className="grid grid-cols-2 gap-3 pt-2">
+                    <div className="h-10 bg-gray-200 rounded-xl" />
+                    <div className="h-10 bg-gray-200 rounded-xl" />
+                  </div>
+                  <div className="h-3 w-48 bg-gray-200 rounded-md mx-auto mt-2" />
+                  <div className="grid grid-cols-2 gap-3 pt-2">
+                    <div className="h-11 bg-gray-200 rounded-xl" />
+                    <div className="h-11 bg-gray-200 rounded-xl" />
+                  </div>
+                  <div className="h-8 w-full bg-gray-200 rounded-xl mt-2" />
+                </div>
+              </div>
+            ) : (
               <div className="w-full lg:w-[340px] xl:w-[360px] shrink-0">
                 <div className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-md divide-y divide-gray-100">
                   <div className="p-5">
