@@ -48,9 +48,8 @@ function ReelCard({ reel, onPlay }) {
 
   return (
     <div
-      className={`group relative cursor-pointer flex flex-col transition-all duration-500 ease-out mx-auto w-full max-w-[270px] ${
-        reel.highlight ? "lg:-translate-y-2" : ""
-      }`}
+      className={`group relative cursor-pointer flex flex-col transition-all duration-500 ease-out mx-auto w-full max-w-[270px] ${reel.highlight ? "lg:-translate-y-2" : ""
+        }`}
       style={{ touchAction: "pan-x pan-y" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -58,13 +57,12 @@ function ReelCard({ reel, onPlay }) {
     >
       {/* Outer Glow & Card Container */}
       <div
-        className={`relative aspect-[9/16] w-full rounded-[24px] sm:rounded-[28px] overflow-hidden bg-slate-900 border-2 transition-all duration-500 transform-gpu isolate ${
-          reel.highlight
-            ? "border-emerald-400/80 shadow-[0_12px_30px_rgba(16,185,129,0.22)] group-hover:shadow-[0_20px_40px_rgba(16,185,129,0.3)] group-hover:scale-[1.03]"
-            : "border-slate-200/80 shadow-lg group-hover:border-emerald-400/60 group-hover:shadow-[0_15px_35px_rgba(16,185,129,0.16)] group-hover:scale-[1.02]"
-        }`}
+        className={`relative aspect-[9/16] w-full rounded-[24px] sm:rounded-[28px] overflow-hidden bg-slate-900 border-2 transition-all duration-500 transform-gpu isolate ${reel.highlight
+          ? "border-emerald-400/80 shadow-[0_12px_30px_rgba(16,185,129,0.22)] group-hover:shadow-[0_20px_40px_rgba(16,185,129,0.3)] group-hover:scale-[1.03]"
+          : "border-slate-200/80 shadow-lg group-hover:border-emerald-400/60 group-hover:shadow-[0_15px_35px_rgba(16,185,129,0.16)] group-hover:scale-[1.02]"
+          }`}
       >
-        {/* Video preview element (pointer-events-none prevents touch blocking on mobile) */}
+        {/* Video preview element */}
         <video
           ref={videoRef}
           src={`${reel.video}#t=1.5`}
@@ -81,11 +79,10 @@ function ReelCard({ reel, onPlay }) {
         {/* Center Play Button Overlay */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
           <div
-            className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center border border-white/50 backdrop-blur-md shadow-xl transition-all duration-500 ${
-              isHovered
-                ? "scale-110 bg-emerald-500 text-white border-emerald-300"
-                : "bg-white/30 text-white group-hover:bg-emerald-500 group-hover:border-emerald-400"
-            }`}
+            className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center border border-white/50 backdrop-blur-md shadow-xl transition-all duration-500 ${isHovered
+              ? "scale-110 bg-emerald-500 text-white border-emerald-300"
+              : "bg-white/30 text-white group-hover:bg-emerald-500 group-hover:border-emerald-400"
+              }`}
           >
             <Play size={22} className="ml-0.5 fill-current drop-shadow-md" />
           </div>
@@ -199,19 +196,19 @@ export default function UnderstandCanvade() {
     <section className="px-4 sm:px-6 lg:px-12 py-8 sm:py-12 lg:py-14 bg-slate-50/60 select-none overflow-hidden border-y border-slate-100">
       <div className="max-w-[940px] mx-auto">
 
-        {/* Section Header */}
-        <div className="text-center mb-8 sm:mb-10 max-w-xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-semibold text-slate-900 tracking-tight mb-2">
+        {/* Section Header - Exact Image 2 Match */}
+        <div className="text-center mb-8 sm:mb-10 max-w-2xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl lg:text-4xl font-medium text-slate-900 tracking-tight mb-3">
             Understand{" "}
-            <span className="text-emerald-600 relative inline-block">
+            <span className="text-emerald-600 font-medium">
               CANVADE
             </span>{" "}
             in Seconds
           </h2>
 
-          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-            Watch quick video reels to see how Canvade helps you discover top courses,
-            compare institutes transparently, and enroll with confidence.
+          <p className="text-slate-500 pb-2 text-sm sm:text-base leading-relaxed max-w-xl mx-auto font-normal">
+            Watch quick reels to see how Canvade helps you discover courses,
+            compare institutes, and choose the right path - all in one place.
           </p>
         </div>
 
@@ -258,9 +255,8 @@ export default function UnderstandCanvade() {
                     });
                   }
                 }}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  activeIndex === idx ? "w-5 bg-emerald-600" : "w-1.5 bg-slate-300"
-                }`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === idx ? "w-5 bg-emerald-600" : "w-1.5 bg-slate-300"
+                  }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}

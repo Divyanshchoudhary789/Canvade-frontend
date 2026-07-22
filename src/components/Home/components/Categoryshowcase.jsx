@@ -52,9 +52,8 @@ function PreloadedImage({ src, alt, className = '', style = {}, loading = 'eager
                 <img
                     src={displaySrc}
                     alt={alt || ''}
-                    className={`${className} transition-opacity duration-300 ease-in-out ${
-                        isLoaded ? 'opacity-100 scale-100' : 'opacity-85 scale-[0.99]'
-                    }`}
+                    className={`${className} transition-opacity duration-300 ease-in-out ${isLoaded ? 'opacity-100 scale-100' : 'opacity-85 scale-[0.99]'
+                        }`}
                     style={style}
                     loading={loading}
                     decoding="async"

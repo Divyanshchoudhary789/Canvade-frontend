@@ -4,7 +4,7 @@ import UpdateCard from "../Updates/UpdateCard";
 export default function NewsletterSection() {
   // API Integration States
   const [updates, setUpdates] = useState([]);
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://canvade-backend.onrender.com";
+  const BASE_URL = import.meta.env.VITE_API_URL || "https://canvade-backend.onrender.com";
 
   // Fetch data exactly matching your backend API payload structure
   useEffect(() => {
@@ -37,11 +37,11 @@ export default function NewsletterSection() {
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
           {updates.slice(0, 4).map((item, idx) => (
-            <UpdateCard 
-              key={item.updateId || `newsletter-${idx}`} 
+            <UpdateCard
+              key={item.updateId || `newsletter-${idx}`}
               {...item}
               // Explicit property key alignments matching your database response:
-              image={item.thumbnail || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500"} 
+              image={item.thumbnail || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500"}
               date={item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ""}
             />
           ))}

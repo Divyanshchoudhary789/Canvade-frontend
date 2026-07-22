@@ -16,7 +16,7 @@ const BackgroundImage = memo(function BackgroundImage({ src, isFading }) {
     <img
       src={src}
       alt="Hero Background"
-      className="absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-out"
+      className="absolute inset-0 h-full w-full object-cover object-bottom transition-opacity duration-700 ease-out"
       style={{
         opacity: isFading ? 0 : 1,
       }}
@@ -40,29 +40,29 @@ const HeroContainer = memo(function HeroContainer({
 
   return (
     <div
-      className="hero-root relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#004D40] via-[#005C53] to-[#042F2C] shadow-2xl transition-all duration-300"
+      className="hero-root relative overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#004D40]  transition-all duration-300"
       role="banner"
       aria-label="Hero section"
     >
       {/* Background image for Desktop / Large screens */}
       <div className="absolute inset-0 hidden lg:block overflow-hidden">
         <BackgroundImage src={backgroundImage} isFading={isFading} />
-        {/* Soft overlay gradient to preserve background elements & keep text crisp */}
+        {/* Soft edge ambient overlay */}
         <div
-          className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/10 pointer-events-none"
+          className="absolute inset-0 bg-gradient-to-r from-black/15 via-transparent to-transparent pointer-events-none"
           aria-hidden="true"
         />
       </div>
 
-      {/* Decorative subtle background grid pattern for mobile/tablet */}
+      {/* Decorative background grid pattern for mobile/tablet */}
       <div className="absolute inset-0 lg:hidden opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
-      {/* Hero Container Content */}
-      <div className="relative z-10 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 sm:gap-8 lg:gap-10 min-h-0 lg:min-h-[560px] xl:min-h-[600px]">
-          
-          {/* Left Column: Hero Text & Mobile Highlights */}
-          <div className="w-full lg:w-[48%] xl:w-[46%] flex flex-col justify-center gap-6">
+      {/* Hero Container Content - pb-0 on lg to allow form card to touch the bottom boundary */}
+      <div className="relative z-10 p-4 sm:p-6 md:p-8 lg:pl-10 lg:pr-8 lg:pt-8 lg:pb-0 xl:pl-12 xl:pr-12 xl:pt-10 xl:pb-0">
+        <div className="flex flex-col lg:flex-row lg:items-stretch lg:justify-between gap-6 sm:gap-8 lg:gap-4 min-h-0 lg:min-h-[550px] xl:min-h-[590px]">
+
+          {/* Left Column: Top-aligned Hero Text */}
+          <div className="w-full lg:w-[38%] xl:w-[36%] flex flex-col justify-start pt-2 lg:pt-3 gap-6">
             <HeroText />
 
             {/* Mobile & Tablet category badges preview */}
@@ -89,16 +89,18 @@ const HeroContainer = memo(function HeroContainer({
             </div>
           </div>
 
-          {/* Right Column: Search Form Card */}
-          <div className="w-full lg:w-[430px] xl:w-[470px] shrink-0 self-stretch lg:self-center">
-            <SearchForm
-              formData={formData}
-              errors={errors}
-              touched={touched}
-              onFieldChange={onFieldChange}
-              onFieldBlur={onFieldBlur}
-              onSubmit={onFormSubmit}
-            />
+          {/* Right Column: Bottom-aligned Search Form Card */}
+          <div className="w-full lg:w-[420px] xl:w-[450px] shrink-0 self-stretch lg:self-end flex items-end">
+            <div className="w-full lg:rounded-b-none overflow-hidden transform lg:translate-y-1">
+              <SearchForm
+                formData={formData}
+                errors={errors}
+                touched={touched}
+                onFieldChange={onFieldChange}
+                onFieldBlur={onFieldBlur}
+                onSubmit={onFormSubmit}
+              />
+            </div>
           </div>
 
         </div>

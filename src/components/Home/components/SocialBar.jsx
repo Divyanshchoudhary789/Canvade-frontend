@@ -10,11 +10,11 @@ import { FaXTwitter } from 'react-icons/fa6';
 import { SOCIAL_ICONS } from '../constants/heroConstants';
 
 const ICON_MAP = {
-  facebook:  <Facebook size={15} aria-hidden="true" />,
+  facebook: <Facebook size={15} aria-hidden="true" />,
   instagram: <Instagram size={15} aria-hidden="true" />,
-  x:         <FaXTwitter size={14} aria-hidden="true" />,
-  linkedin:  <Linkedin size={15} aria-hidden="true" />,
-  youtube:   <Youtube size={15} aria-hidden="true" />,
+  x: <FaXTwitter size={14} aria-hidden="true" />,
+  linkedin: <Linkedin size={15} aria-hidden="true" />,
+  youtube: <Youtube size={15} aria-hidden="true" />,
 };
 
 const SocialBar = memo(function SocialBar() {
